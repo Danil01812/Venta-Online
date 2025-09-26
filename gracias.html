@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gracias por tu pedido</title>
+  <style>
+    :root {
+        --neon-blue: #00ffe7;
+        --neon-blue-dark: #00b8a9;
+        --form-bg: rgba(0, 30, 40, 0.95);
+        --text-light: #e0f7fa;
+        --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .initial-hidden { opacity: 0; transition: opacity 1.5s ease-out; }
+    .fade-in { opacity: 1; }
+
+    body {
+        font-family: var(--main-font);
+        color: var(--text-light);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: url('magenes.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    #particles-js {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        z-index: 5;
+        pointer-events: none;
+    }
+
+    main {
+        position: relative;
+        z-index: 10;
+        max-width: 500px;
+        background: var(--form-bg);
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 0 30px var(--neon-blue);
+        border: 2px solid var(--neon-blue-dark);
+        text-align: center;
+        backdrop-filter: blur(8px);
+    }
+
+    h1 {
+        font-size: 2rem;
+        color: var(--neon-blue);
+        text-shadow: 0 0 15px var(--neon-blue);
+        margin-bottom: 15px;
+        animation: pulse-shadow 2s infinite alternate;
+    }
+
+    p {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+
+    a {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--neon-blue), var(--neon-blue-dark));
+        padding: 12px 30px;
+        border-radius: 30px;
+        color: #00221a;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 0 15px var(--neon-blue);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    a:hover {
+        background: linear-gradient(135deg, var(--neon-blue-dark), #007764);
+        color: var(--text-light);
+        box-shadow: 0 0 30px var(--neon-blue);
+        transform: translateY(-2px);
+    }
+
+    @keyframes pulse-shadow {
+        from { text-shadow: 0 0 10px var(--neon-blue); }
+        to { text-shadow: 0 0 20px var(--neon-blue-dark); }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <main class="initial-hidden">
+    <h1>¡Gracias por tu pedido!</h1>
+    <p>Hemos recibido tu información y te contactaremos pronto para confirmar los detalles.</p>
+    <a href="pedidos.html">Volver al formulario</a>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    // Efecto de aparición
+    window.addEventListener('load', function() {
+        document.querySelector('main').classList.add('fade-in');
+    });
+
+    // Partículas
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#00ffe7" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#00ffe7", opacity: 0.3, width: 1 },
+        move: { enable: true, speed: 2, random: true, out_mode: "out" }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+      },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

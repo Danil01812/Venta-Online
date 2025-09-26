@@ -142,13 +142,15 @@
 </header>
 
 <main class="initial-hidden">
-  <form action="https://formsubmit.co/tu_correo_aqui" method="post">
-
+  <form action="https://formsubmit.co/suarez181206@gmail.com" method="POST" id="pedidoForm">
     <label for="txtnombre">Nombre:</label>
     <input type="text" id="txtnombre" name="txtnombre" placeholder="Escribe tu nombre" required>
 
+    <label for="txtapellidos">Apellidos:</label>
+    <input type="text" id="txtapellidos" name="txtapellidos" placeholder="Escribe tus apellidos" required>
+
     <label for="txtcorreo">Correo:</label>
-    <input type="email" id="txtcorreo" name="txtcorreo" placeholder="cliente@email.com" required>
+    <input type="email" id="txtcorreo" name="txtcorreo" placeholder="cliente@gmail.com" required>
 
     <label for="cboproducto">Producto:</label>
     <select name="cboproducto" id="cboproducto" required>
@@ -163,19 +165,21 @@
     <label for="txtcomentarios">Comentarios / Detalles del pedido:</label>
     <textarea id="txtcomentarios" name="txtcomentarios" placeholder="Escribe cantidades, dirección de entrega, modelo..."></textarea>
 
-    <button type="submit">Enviar Pedido</button>
-
-    <input type="hidden" name="_next" value="URL_DE_TU_PAGINA_DE_GRACIAS">
+    <input type="hidden" name="_next" value="gracias.html">
     <input type="hidden" name="_subject" value="Nuevo Pedido desde la Web">
+
+    <button type="submit">Enviar Pedido</button>
   </form>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
+    // Efecto de aparición
     window.addEventListener('load', function() {
         document.querySelectorAll('header, main').forEach(el => el.classList.add('fade-in'));
     });
 
+    // Partículas
     particlesJS('particles-js', {
       particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -192,6 +196,15 @@
       },
       retina_detect: true
     });
+
+    // Confirmación antes de enviar
+    document.getElementById('pedidoForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Evita envío automático
+      if (confirm("¿Quieres enviar tu pedido con la información ingresada?")) {
+        this.submit(); // Envía si confirma
+      }
+    });
 </script>
+
 </body>
 </html>
