@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiénes Somos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      background: url('magenes.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #e0f7fa;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(0, 30, 40, 0.8);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px #00ffe7cc;
+      max-width: 800px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.6rem;
+      color: #00ffe7;
+      text-shadow: 0 0 15px #00ffe7;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: justify;
+      color: #b2ffff;
+    }
+
+    /* Partículas tecnológicas */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #00ffe7;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: floatParticles linear infinite;
+    }
+
+    @keyframes floatParticles {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Quiénes Somos</h1>
+    <p>
+      Somos una comunidad dedicada a crear proyectos que inspiren, conecten y transformen ideas en realidades.  
+      Creemos en el trabajo colaborativo, en el aprendizaje continuo y en el uso de la tecnología como herramienta para abrir nuevas oportunidades.  
+      Cada iniciativa que realizamos busca generar impacto positivo y motivar a otros a construir un futuro más innovador, accesible y emocionante.
+    </p>
+  </div>
+
+  <script>
+    // Generación de partículas
+    const numParticles = 25;
+    for (let i = 0; i < numParticles; i++) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      document.body.appendChild(particle);
+      particle.style.left = Math.random() * 100 + "vw";
+      particle.style.top = Math.random() * 100 + "vh";
+      particle.style.animationDuration = (5 + Math.random() * 5) + "s";
+      particle.style.animationDelay = Math.random() * 5 + "s";
+      particle.style.transform = `scale(${Math.random() * 0.8 + 0.5})`;
+    }
+  </script>
+
+</body>
+</html>

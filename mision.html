@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Misión: El Nexus Digital</title>
+    <style>
+        /* Variables de color Cyberpunk/Neón */
+        :root {
+            --neon-blue: #00ffe7;
+            --neon-blue-dark: #00b8a9;
+            --background-dark: rgba(10, 10, 15, 0.95);
+            --text-light: #e0f7fa;
+            --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Reset y Estructura */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: var(--main-font);
+            color: var(--text-light);
+            /* FONDO DE IMAGEN */
+            background: url('magenes.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Contenedor principal de la Misión */
+        .mision-container {
+            position: relative;
+            max-width: 900px;
+            width: 90%;
+            background: var(--background-dark);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 0 30px var(--neon-blue);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 231, 0.5);
+            z-index: 10; /* Asegura que esté sobre las partículas */
+        }
+        
+        /* Título Principal (La Misión) */
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin: 0 0 30px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
+            text-align: center;
+            border-bottom: 3px solid var(--neon-blue-dark);
+            padding-bottom: 15px;
+        }
+
+        /* Contenido de Misión: Imagen y Texto */
+        .mision-content {
+            display: flex;
+            gap: 30px;
+            align-items: center; 
+        }
+
+        /* Estilo de la imagen de la Misión */
+        .mision-image {
+            flex-shrink: 0;
+            width: 45%; 
+        }
+        .mision-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 15px var(--neon-blue-dark); 
+            border: 3px solid var(--neon-blue);
+            filter: brightness(0.9);
+        }
+
+        /* Contenido del texto de la Misión */
+        .mision-text {
+            flex-grow: 1;
+        }
+        .mision-text p {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            padding: 20px;
+            background: rgba(0, 10, 20, 0.6);
+            border-left: 5px solid var(--neon-blue);
+            border-radius: 5px;
+        }
+
+        /* Capa de partículas */
+        #particles-js {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 5;
+            pointer-events: none;
+            background: transparent;
+        }
+        
+        /* Media Query para móvil: apilar la imagen y el texto */
+        @media (max-width: 768px) {
+            .mision-content {
+                flex-direction: column;
+            }
+            .mision-image {
+                width: 100%;
+                max-width: 350px;
+                margin-bottom: 20px;
+            }
+            .mision-text p {
+                font-size: 1.1rem;
+            }
+            .mision-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <main role="main">
+        <section class="mision-container">
+            <h1>MISIÓN: EL NEXUS DIGITAL</h1>
+            
+            <div class="mision-content">
+                
+                <div class="mision-image">
+                    <img src="descarga.jpg" alt="Gráficos de ofertas y velocidad, representando la misión de transacciones rápidas." loading="lazy" />
+                </div>
+                
+                <div class="mision-text">
+                    <p>
+                        Ser el **Nexus digital** y la plataforma de comercio electrónico más fluida y segura de la región, 
+                        conectando a cada proveedor con su cliente ideal a través de una interfaz de tecnología Neón, 
+                        garantizando **transacciones ultrarrápidas** y una experiencia de compra futurista 24/7. 
+                        Nuestro objetivo es **democratizar el acceso al mercado digital** para que cualquier negocio 
+                        pueda prosperar en la *Grid* urbana.
+                    </p>
+                </div>
+            </div>
+            
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Configuración de particles.js
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#00ffe7" },
+            shape: { type: "circle" },
+            opacity: {
+              value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+            },
+            size: { value: 3, random: true, anim: { enable: false } },
+            line_linked: { enable: true, distance: 150, color: "#00ffe7", opacity: 0.3, width: 1 },
+            move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "repulse" },
+              onclick: { enable: true, mode: "push" }
+            },
+            modes: {
+              repulse: { distance: 100, duration: 0.4 },
+              push: { particles_nb: 4 }
+            }
+          },
+          retina_detect: true
+        });
+    </script>
+</body>
+</html>

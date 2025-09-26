@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedidos en línea - Cyberpunk Style (Con Transición)</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+        /* Variables de color */
+        :root {
+            --neon-blue: #00ffe7;
+            --neon-blue-dark: #00b8a9;
+            --background-dark: rgba(10, 10, 15, 0.95);
+            --card-dark: rgba(0, 30, 40, 0.85);
+            --text-light: #e0f7fa;
+            --footer-text: #007764;
+            --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Reset y Estructura */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: var(--main-font);
+            color: var(--text-light);
+            background: url('magenes.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- ESTILO DE TRANSICIÓN GLOBAL --- */
+        /* Estado inicial invisible (se aplicará a header y main) */
+        .initial-hidden {
+            opacity: 0;
+            transition: opacity 1.5s ease-out; /* Velocidad de la transición */
+        }
+        /* Estado final visible (se aplica con JavaScript) */
+        .fade-in {
+            opacity: 1;
+        }
+
+        /* Capa de partículas */
+        #particles-js {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 5;
+            pointer-events: none;
+            background: transparent;
+        }
+
+        /* Contenedores principales */
+        header, main, footer {
+            position: relative;
+            max-width: 1300px;
+            width: 95%;
+            margin: 15px auto;
+            background: var(--background-dark);
+            border-radius: 12px;
+            padding: 25px 30px;
+            box-shadow: 0 0 20px var(--neon-blue);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 231, 0.3);
+        }
+        
+        /* Elevar el header completo para el menú */
+        header {
+            z-index: 50; 
+            padding-bottom: 5px;
+        }
+
+        /* El main y el footer pueden tener un z-index normal */
+        main, footer {
+            z-index: 10; 
+        }
+
+        /* --- Título --- */
+        header h1 {
+            font-size: clamp(2.5rem, 6vw, 3.2rem);
+            margin: 0 0 15px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
+            text-align: center;
+        }
+
+        /* --- Menú de Navegación --- */
+        nav {
+            border-top: 1px solid rgba(0, 255, 231, 0.2);
+            padding-top: 10px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        nav ul li {
+            position: relative;
+            padding: 10px 0;
+            color: var(--neon-blue);
+            transition: color 0.3s ease;
+        }
+        nav ul li:hover {
+            color: var(--neon-blue-dark);
+        }
+        nav a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        /* Flecha Submenú */
+        nav ul li.has-submenu > a::after {
+            content: "\25BC";
+            font-size: 0.6rem;
+            margin-left: 8px;
+            vertical-align: middle;
+            color: var(--neon-blue);
+            transition: color 0.3s ease;
+        }
+        
+        /* Estilo del Submenú (Dropdown) */
+        nav ul li ul {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 10, 20, 0.99);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 30px var(--neon-blue);
+            min-width: 220px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            z-index: 2000;
+            
+            display: block;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        /* Regla que hace visible el submenú al pasar el ratón */
+        nav ul li:hover > ul {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        nav ul li ul li {
+            margin: 10px 0;
+            color: var(--neon-blue);
+            text-align: left;
+            padding: 5px 8px;
+            border-bottom: 1px solid rgba(0, 255, 231, 0.1);
+        }
+        nav ul li ul li:last-child {
+            border-bottom: none;
+        }
+        nav ul li ul li:hover {
+            color: var(--neon-blue-dark);
+            background-color: rgba(0, 184, 169, 0.15);
+            border-radius: 4px;
+        }
+
+        /* --- Sección Productos (GRID) --- */
+        .padres {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-top: 20px;
+        }
+
+        .nieto {
+            background: var(--card-dark);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            overflow: hidden;
+            padding-bottom: 30px; 
+        }
+        .nieto:hover {
+            transform: scale(1.03) translateY(-5px);
+            box-shadow: 0 0 40px var(--neon-blue);
+        }
+
+        .nieto img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            filter: brightness(0.9);
+            border: 2px solid var(--neon-blue);
+            transition: border-color 0.4s ease;
+        }
+        .nieto:hover img {
+            border-color: var(--neon-blue-dark);
+            filter: brightness(1.1);
+        }
+
+        .nieto h2 {
+            font-size: 1.7rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
+            margin-bottom: 10px;
+        }
+
+        .nieto p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #b2ffff;
+            margin-bottom: 0;
+        }
+        
+        /* --- Redes Sociales --- */
+        .social {
+            text-align: center;
+            padding-top: 30px;
+        }
+        .social h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        .social a {
+            color: var(--neon-blue);
+            font-size: 2.5rem;
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+        .social a:hover {
+            color: var(--neon-blue-dark);
+            transform: translateY(-5px) scale(1.1);
+        }
+        /* Colores de marca en hover */
+        .social a.facebook:hover { color: #3b5998; }
+        .social a.twitter:hover { color: #1da1f2; }
+        .social a.instagram:hover { color: #c32aa3; }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            background: transparent;
+            box-shadow: none;
+            padding: 15px 0;
+            border: none;
+            backdrop-filter: none;
+        }
+        footer p {
+            color: var(--footer-text);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Media Queries */
+        @media (max-width: 600px) {
+            header, main, footer {
+                width: 100%;
+                margin: 10px auto;
+                padding: 15px;
+                border-radius: 0;
+            }
+            .padres {
+                grid-template-columns: 1fr;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            /* El submenú en móviles se hace estático y se integra en el flujo */
+            nav ul li ul {
+                position: static;
+                transform: none;
+                width: 100%;
+                box-shadow: inset 0 0 10px rgba(0, 255, 231, 0.5);
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body onload="document.body.classList.add('fade-in')">
+
+    <div id="particles-js"></div>
+
+    <header role="banner" class="initial-hidden">
+        <h1>Pedidos en línea - ¡Compra fácil y rápido!</h1>
+        <nav role="navigation" aria-label="Menú principal de navegación">
+            <ul>
+                <li><a href="quienessomos.html">Quiénes somos</a></li>
+                <li><a href="vision.html">Visión</a></li>
+                <li><a href="mision.html">Misión</a></li>
+                <li><a href="pedidos.html">Pedidos</a></li>
+                <li class="has-submenu">
+                    <a href="#" aria-expanded="false" aria-controls="submenu-reportes">Reportes</a>
+                    <ul id="submenu-reportes">
+                        <li><a href="consulta1.html">Consulta 1</a></li>
+                        <li><a href="consulta2.html">Consulta 2</a></li>
+                        <li><a href="consulta3.html">Consulta 3</a></li>
+                        <li><a href="consulta4.html">Consulta 4</a></li>
+                        <li><a href="consulta5.html">Consulta 5</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main role="main" class="initial-hidden">
+        <section class="padres" aria-label="Productos destacados para ventas online">
+            <article class="nieto">
+                <h2>Tu tienda online propia</h2>
+                <img src="imagen1.jpg" alt="Pantalla mostrando una tienda online personalizada" loading="lazy" />
+                <p>
+                    Crea tu marca y controla cada venta usando plataformas como Shopify o WooCommerce. **Tu negocio, tus reglas.**
+                </p>
+            </article>
+
+            <article class="nieto">
+                <h2>Vende en marketplaces líderes</h2>
+                <img src="images.jpg" alt="Iconos de Amazon, eBay y Mercado Libre en una pantalla" loading="lazy" />
+                <p>
+                    Accede a millones de clientes ya activos. La mejor forma de **expandir rápido tu alcance y ventas.**
+                </p>
+            </article>
+
+            <article class="nieto">
+                <h2>Ofertas irresistibles online</h2>
+                <img src="descarga.jpg" alt="Productos con descuentos y un gran cartel de oferta" loading="lazy" />
+                <p>
+                    Descuentos exclusivos y promociones que convierten visitantes en clientes fieles. **Aprovecha y crece tus ingresos.**
+                </p>
+            </article>
+        </section>
+
+        <section class="social" aria-label="Enlaces a nuestras redes sociales">
+            <h2>Síguenos y no te pierdas ninguna oferta</h2>
+            <a href="https://facebook.com/tu_pagina" target="_blank" class="facebook" aria-label="Visítanos en Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://instagram.com/tu_usuario" target="_blank" class="instagram" aria-label="Síguenos en Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://twitter.com/tu_usuario" target="_blank" class="twitter" aria-label="Síguenos en Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://youtube.com/@tu_canal" target="_blank" class="youtube" aria-label="Suscríbete a nuestro canal de YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://wa.me/51999999999" target="_blank" class="whatsapp" aria-label="Contáctanos por WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com/@tu_cuenta" target="_blank" class="tiktok" aria-label="Síguenos en TikTok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://discord.com/" target="_blank" class="discord" aria-label="Únete a nuestro Discord">
+                <i class="fab fa-discord"></i>
+            </a>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="initial-hidden">
+        <p>&copy; 2025 Derechos reservados por: Danilo Zarzoza Cruzado</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Función para aplicar la transición de opacidad
+        window.addEventListener('load', function() {
+            // Selecciona todos los elementos que quieres que aparezcan con la transición
+            const elementsToFade = document.querySelectorAll('header, main, footer');
+            
+            elementsToFade.forEach(element => {
+                element.classList.add('fade-in');
+            });
+        });
+
+        // Configuración de particles.js
+        particlesJS('particles-js', {
+          particles: {
+            number: {
+              value: 80,
+              density: {
+                enable: true,
+                value_area: 800
+              }
+            },
+            color: {
+              value: "#00ffe7"
+            },
+            shape: {
+              type: "circle"
+            },
+            opacity: {
+              value: 0.5,
+              random: true,
+              anim: {
+                enable: true,
+                speed: 1,
+                opacity_min: 0.1,
+                sync: false
+              }
+            },
+            size: {
+              value: 3,
+              random: true,
+              anim: {
+                enable: false
+              }
+            },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: "#00ffe7",
+              opacity: 0.3,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: "none",
+              random: true,
+              straight: false,
+              out_mode: "out",
+              bounce: false
+            }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: {
+                enable: true,
+                mode: "repulse"
+              },
+              onclick: {
+                enable: true,
+                mode: "push"
+              }
+            },
+            modes: {
+              repulse: {
+                distance: 100,
+                duration: 0.4
+              },
+              push: {
+                particles_nb: 4
+              }
+            }
+          },
+          retina_detect: true
+        });
+    </script>
+</body>
+</html>
