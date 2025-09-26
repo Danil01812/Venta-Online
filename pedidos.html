@@ -3,35 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de Consulta - Neón y Partículas (Con Transición)</title>
+  <title>Formulario de Pedido</title>
   <style>
-    /* Variables de color Neón */
     :root {
         --neon-blue: #00ffe7;
         --neon-blue-dark: #00b8a9;
-        --background-dark: rgba(10, 10, 15, 0.9);
-        --form-bg: rgba(0, 30, 40, 0.95); /* Menos transparente para ver mejor el formulario */
+        --form-bg: rgba(0, 30, 40, 0.95);
         --input-bg: rgba(0, 15, 20, 0.7);
         --text-light: #e0f7fa;
         --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* --- ESTILO DE TRANSICIÓN GLOBAL --- */
-    /* Estado inicial invisible */
-    .initial-hidden {
-        opacity: 0;
-        transition: opacity 1.5s ease-out; /* Define la transición de 1.5 segundos */
-    }
-    /* Estado final visible (se aplica con JavaScript) */
-    .fade-in {
-        opacity: 1;
-    }
-    /* --- FIN ESTILO TRANSICIÓN --- */
+    .initial-hidden { opacity: 0; transition: opacity 1.5s ease-out; }
+    .fade-in { opacity: 1; }
 
-    /* Reset y cuerpo */
-    * {
-        box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
         font-family: var(--main-font);
         color: var(--text-light);
@@ -41,30 +27,20 @@
         align-items: center;
         justify-content: center;
         padding: 20px;
-        
-        /* ESTILOS CLAVE PARA EL FONDO DE IMAGEN */
         background: url('magenes.jpg') no-repeat center center fixed;
         background-size: cover;
     }
 
-    /* Contenedor para partículas detrás */
     #particles-js {
         position: fixed;
         top: 0; left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 5; /* Detrás del header y main */
+        width: 100vw; height: 100vh;
+        z-index: 5;
         pointer-events: none;
-        background: transparent;
     }
 
-    /* Contenedores principales */
-    header, main {
-        position: relative;
-        z-index: 10; /* Adelante de las partículas */
-    }
+    header, main { position: relative; z-index: 10; }
 
-    /* Contenedor principal para el formulario */
     main {
         max-width: 500px;
         width: 100%;
@@ -73,43 +49,29 @@
         padding: 40px;
         box-shadow: 0 0 30px var(--neon-blue);
         border: 2px solid var(--neon-blue-dark);
-        backdrop-filter: blur(8px); 
+        backdrop-filter: blur(8px);
     }
 
-    /* Título del Header */
     header {
         margin-bottom: 30px;
         text-align: center;
-        width: 100%;
         max-width: 500px;
     }
     header h1 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
         color: var(--neon-blue);
         text-shadow: 0 0 15px var(--neon-blue);
         border-bottom: 3px solid var(--neon-blue);
         padding-bottom: 10px;
         animation: pulse-shadow 2s infinite alternate;
     }
-
-    /* Animación para el título */
     @keyframes pulse-shadow {
-        from {
-            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue-dark);
-        }
-        to {
-            text-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue-dark);
-        }
+        from { text-shadow: 0 0 10px var(--neon-blue); }
+        to { text-shadow: 0 0 20px var(--neon-blue-dark); }
     }
 
-    /* Formulario */
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+    form { display: flex; flex-direction: column; gap: 15px; }
 
-    /* Etiquetas */
     label {
         font-size: 1.1rem;
         font-weight: 600;
@@ -118,14 +80,12 @@
         text-shadow: 0 0 5px rgba(0, 255, 231, 0.5);
     }
 
-    /* Campos de texto, email, select y textarea */
     input[type="text"],
     input[type="email"],
     select,
     textarea {
         width: 100%;
         padding: 12px;
-        margin-bottom: 15px;
         border: 2px solid var(--neon-blue-dark);
         border-radius: 8px;
         background-color: var(--input-bg);
@@ -135,22 +95,15 @@
         box-shadow: inset 0 0 5px rgba(0, 255, 231, 0.3);
     }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
+    input:focus, select:focus, textarea:focus {
         border-color: var(--neon-blue);
         box-shadow: 0 0 10px var(--neon-blue);
         outline: none;
         background-color: rgba(0, 20, 30, 0.9);
     }
 
-    /* Textarea con altura fija */
-    textarea {
-        resize: vertical;
-        min-height: 100px;
-    }
+    textarea { resize: vertical; min-height: 100px; }
 
-    /* Botón de Enviar */
     button[type="submit"] {
         background: linear-gradient(135deg, var(--neon-blue), var(--neon-blue-dark));
         border: none;
@@ -169,23 +122,14 @@
     button[type="submit"]:hover {
         background: linear-gradient(135deg, var(--neon-blue-dark), #007764);
         color: var(--text-light);
-        box-shadow: 0 0 30px var(--neon-blue), 0 0 5px #000;
+        box-shadow: 0 0 30px var(--neon-blue);
         transform: translateY(-2px);
     }
 
-    /* Media Query para hacerlo responsivo */
     @media (max-width: 600px) {
-        main {
-            padding: 25px;
-            margin: 10px;
-            border-radius: 0;
-        }
-        header h1 {
-            font-size: 2rem;
-        }
-        button[type="submit"] {
-            padding: 12px 30px;
-        }
+        main { padding: 25px; margin: 10px; border-radius: 0; }
+        header h1 { font-size: 2rem; }
+        button[type="submit"] { padding: 12px 30px; }
     }
   </style>
 </head>
@@ -194,130 +138,57 @@
 <div id="particles-js"></div>
 
 <header class="initial-hidden">
-  <h1>FORMULARIO DE CONSULTA</h1>
+  <h1>HAZ TU PEDIDO</h1>
 </header>
 
 <main class="initial-hidden">
-  <form action="https://formsubmit.co/suarez181206@gmail.com" method="post">
+  <form action="https://formsubmit.co/tu_correo_aqui" method="post">
 
-    <label for="txtnombre">Nombres:</label>
-    <input type="text" id="txtnombre" name="txtnombre" required>
-
-    <label for="txtapellidos">Apellidos:</label>
-    <input type="text" id="txtapellidos" name="txtapellidos" required>
+    <label for="txtnombre">Nombre:</label>
+    <input type="text" id="txtnombre" name="txtnombre" placeholder="Escribe tu nombre" required>
 
     <label for="txtcorreo">Correo:</label>
-    <input type="email" id="txtcorreo" name="txtcorreo" required>
+    <input type="email" id="txtcorreo" name="txtcorreo" placeholder="cliente@email.com" required>
 
-    <label for="cbocurso">Seleccionar Curso:</label>
-    <select name="cbocurso" id="cbocurso">
-      <option value="java">Java</option>
-      <option value="python">Python</option>
-      <option value="html">HTML5</option>
-      <option value="mysql">MySQL</option>
+    <label for="cboproducto">Producto:</label>
+    <select name="cboproducto" id="cboproducto" required>
+      <option value="" disabled selected>Selecciona un producto</option>
+      <option value="laptop">Laptop</option>
+      <option value="celular">Celular</option>
+      <option value="tablet">Tablet</option>
+      <option value="accesorios">Accesorios</option>
+      <option value="otro">Otro (especificar en comentarios)</option>
     </select>
 
-    <label for="cboturno">Turno:</label>
-    <select name="cboturno" id="cboturno">
-      <option value="mañana">Mañana</option>
-      <option value="tarde">Tarde</option>
-      <option value="noche">Noche</option>
-    </select>
+    <label for="txtcomentarios">Comentarios / Detalles del pedido:</label>
+    <textarea id="txtcomentarios" name="txtcomentarios" placeholder="Escribe cantidades, dirección de entrega, modelo..."></textarea>
 
-    <label for="txtSalida">Comentarios:</label>
-    <textarea id="txtSalida" name="txtSalida" rows="5" cols="33"></textarea>
+    <button type="submit">Enviar Pedido</button>
 
-    <button type="submit">Enviar</button>
-    
     <input type="hidden" name="_next" value="URL_DE_TU_PAGINA_DE_GRACIAS">
-
+    <input type="hidden" name="_subject" value="Nuevo Pedido desde la Web">
   </form>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
-    // 1. Script para aplicar la transición de opacidad
     window.addEventListener('load', function() {
-        // Selecciona header y main
-        const elementsToFade = document.querySelectorAll('header, main');
-        
-        // Añade la clase 'fade-in' para activar la transición
-        elementsToFade.forEach(element => {
-            element.classList.add('fade-in');
-        });
+        document.querySelectorAll('header, main').forEach(el => el.classList.add('fade-in'));
     });
 
-    // 2. Configuración de particles.js (sin cambios)
     particlesJS('particles-js', {
       particles: {
-        number: {
-          value: 80, /* Cantidad de partículas */
-          density: {
-            enable: true,
-            value_area: 800
-          }
-        },
-        color: {
-          value: "#00ffe7" /* Color neón */
-        },
-        shape: {
-          type: "circle"
-        },
-        opacity: {
-          value: 0.5,
-          random: true,
-          anim: {
-            enable: true,
-            speed: 1,
-            opacity_min: 0.1,
-            sync: false
-          }
-        },
-        size: {
-          value: 3,
-          random: true,
-          anim: {
-            enable: false
-          }
-        },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#00ffe7",
-          opacity: 0.3,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: "none",
-          random: true,
-          straight: false,
-          out_mode: "out",
-          bounce: false
-        }
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#00ffe7" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#00ffe7", opacity: 0.3, width: 1 },
+        move: { enable: true, speed: 2, random: true, out_mode: "out" }
       },
       interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: {
-            enable: true,
-            mode: "repulse"
-          },
-          onclick: {
-            enable: true,
-            mode: "push"
-          }
-        },
-        modes: {
-          repulse: {
-            distance: 100,
-            duration: 0.4
-          },
-          push: {
-            particles_nb: 4
-          }
-        }
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
       },
       retina_detect: true
     });
